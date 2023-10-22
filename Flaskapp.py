@@ -6,10 +6,10 @@ import zipfile
 app = Flask(__name__)
 
 # Load the trained model
-with zipfile.ZipFile('trained_gb_model.zip', 'r') as file:
-    file.extract('trained_gb_model.joblib', path ='.')
+with zipfile.ZipFile('trained_rf_model.zip', 'r') as file:
+    file.extract('trained_rf_model.joblib', path ='.')
 
-model = joblib.load('trained_gb_model.joblib')
+model = joblib.load('trained_rf_model.joblib')
 
 @app.route('/predict', methods=['POST'])
 def predict():
