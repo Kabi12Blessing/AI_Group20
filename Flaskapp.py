@@ -1,15 +1,15 @@
 from flask import Flask, request, render_template
 import joblib  # For loading your trained model
 import numpy as np  # For data manipulation
-
-app = Flask("Group20")
+import zipfile
+#https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+app = Flask(__name__)
 
 # Load the trained model
-model = joblib.load('trained_model.joblib')
+with zipfile.ZipFile('trained_gb_model.zip', 'r') as file:
+    file.extract('trained_gb_model.joblib', path ='.')
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+model = joblib.load('trained_gb_model.joblib')
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -37,7 +37,6 @@ def predict():
     power_long_shots = int(request.form['power_long_shots'])
     mentality_aggression = int(request.form['mentality_aggression'])
     
-    # Add more input fields here...
 
     # Create an input feature array from the user inputs
     input_features = np.array([
@@ -78,11 +77,13 @@ def calculate_confidence(input_features):
     
     return confidence_level
 
-if __name__ == "__main__":
-    app.run(debug=True)
-    
 @app.route('/')
 def index():
     return render_template('prediction_form.html')
+
+if __name__ == "__main__":
+    app.run(debug=True)
+    
+
 
 
