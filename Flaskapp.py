@@ -30,7 +30,7 @@ def predict():
     age = int(request.form['age'])
     shooting = int(request.form['shooting'])
     skill_ball_control = int(request.form['skill_ball_control'])
-    real_face = int(request.form['real_face'])
+    real_face = bool(request.form['real_face'])
     international_reputation = int(request.form['international_reputation'])
     skill_curve = int(request.form['skill_curve'])
     attacking_crossing = int(request.form['attacking_crossing'])
